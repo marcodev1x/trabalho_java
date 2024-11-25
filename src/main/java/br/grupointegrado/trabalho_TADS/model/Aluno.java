@@ -4,6 +4,8 @@ package br.grupointegrado.trabalho_TADS.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "alunos")
@@ -23,6 +25,17 @@ public class Aluno {
 
     @Column
     private LocalDate data_nascimento;
+
+    @ManyToMany(mappedBy = "alunos")
+    private List<Turma> turmas;
+
+    public List<Turma> getTurmas() {
+        return turmas;
+    }
+
+    public void setTurmas(List<Turma> turmas) {
+        this.turmas = turmas;
+    }
 
     public long getId() {
         return id;

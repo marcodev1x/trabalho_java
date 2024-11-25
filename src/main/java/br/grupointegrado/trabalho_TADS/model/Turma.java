@@ -1,18 +1,18 @@
 package br.grupointegrado.trabalho_TADS.model;
 
 import br.grupointegrado.trabalho_TADS.repository.TurmaRepository;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerator;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.security.PrivateKey;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "turmas")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Turma {
 
     @Id
@@ -28,6 +28,32 @@ public class Turma {
     @ManyToOne
     @JoinColumn(name = "curso_id")
     private Curso curso;
+
+    @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Matricula> matriculas = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(
+            name = "matriculas",
+            joinColumns = @JoinColumn(name = "turma_id"),
+            inverseJoinColumns = @JoinColumn(name = "aluno_id")
+    )
+    private List<Aluno> alunos;
+
+    public List<Aluno> getAlunos() {
+        return alunos;
+    }
+
+    public void setAlunos(List<Aluno> alunos) {
+        this.alunos = alunos;
+    }
+
+    public List<Matricula> getMatriculas() {
+        return matriculas;
+    }
+
+    public void setMatriculas(List<Matricula> matriculas) {
+        this.matriculas = matriculas;
+    }
 
     public long getId() {
         return id;
