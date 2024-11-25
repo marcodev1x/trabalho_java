@@ -1,12 +1,14 @@
 package br.grupointegrado.trabalho_TADS.model;
 
-import jakarta.annotation.Generated;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 import java.util.List;
 
 @Entity
 @Table(name = "cursos")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Curso {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +25,17 @@ public class Curso {
 
     @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Turma> turmas;
+
+    @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Disciplina> disciplinas;
+
+    public List<Disciplina> getDisciplinas() {
+        return disciplinas;
+    }
+
+    public void setDisciplinas(List<Disciplina> disciplinas) {
+        this.disciplinas = disciplinas;
+    }
 
     public List<Turma> getTurmas() {
         return turmas;

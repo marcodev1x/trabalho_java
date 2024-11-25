@@ -1,6 +1,10 @@
 package br.grupointegrado.trabalho_TADS.model;
 
 import br.grupointegrado.trabalho_TADS.repository.TurmaRepository;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerator;
 import jakarta.persistence.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
