@@ -1,6 +1,7 @@
 package br.grupointegrado.trabalho_TADS.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "matriculas")
@@ -11,13 +12,16 @@ public class Matricula {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "turma_id")
+    @JoinColumn(name = "turma_id", nullable = false)
+    @NotNull(message = "Turma não pode ser nula")
     private Turma turma;
 
     @ManyToOne
-    @JoinColumn(name = "aluno_id")
+    @JoinColumn(name = "aluno_id", nullable = false)
+    @NotNull(message = "Aluno não pode ser nulo")
     private Aluno aluno;
 
+    // Getters e Setters
     public Integer getId() {
         return id;
     }

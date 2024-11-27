@@ -1,6 +1,7 @@
 package br.grupointegrado.trabalho_TADS.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -14,19 +15,24 @@ public class Nota {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "matricula_id")
+    @JoinColumn(name = "matricula_id", nullable = false)
+    @NotNull(message = "Matrícula não pode ser nula")
     private Matricula matricula;
 
     @ManyToOne
-    @JoinColumn(name = "disciplina_id")
+    @JoinColumn(name = "disciplina_id", nullable = false)
+    @NotNull(message = "Disciplina não pode ser nula")
     private Disciplina disciplina;
 
-    @Column(name = "nota")
+    @Column(name = "nota", nullable = false)
+    @NotNull(message = "Nota não pode ser nula")
     private BigDecimal nota;
 
-    @Column(name = "data_lancamento")
-    private LocalDate data_lancamento;
+    @Column(name = "data_lancamento", nullable = false)
+    @NotNull(message = "Data de lançamento não pode ser nula")
+    private LocalDate dataLancamento;
 
+    // Getters e Setters
     public Integer getId() {
         return id;
     }
@@ -59,11 +65,11 @@ public class Nota {
         this.nota = nota;
     }
 
-    public LocalDate getData_lancamento() {
-        return data_lancamento;
+    public LocalDate getDataLancamento() {
+        return dataLancamento;
     }
 
-    public void setData_lancamento(LocalDate data_lancamento) {
-        this.data_lancamento = data_lancamento;
+    public void setData_lancamento(LocalDate dataLancamento) {
+        this.dataLancamento = dataLancamento;
     }
 }

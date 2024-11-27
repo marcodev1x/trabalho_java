@@ -1,28 +1,37 @@
 package br.grupointegrado.trabalho_TADS.model;
 
 import jakarta.persistence.*;
-import org.yaml.snakeyaml.events.Event;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "professores")
 public class Professor {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column
+    @Column(nullable = false)
+    @NotNull(message = "Nome não pode ser nulo")
+    @Size(min = 3, max = 100, message = "Nome deve ter entre 3 e 100 caracteres")
     private String nome;
 
-    @Column
+    @Column(nullable = false, unique = true)
+    @NotNull(message = "Email não pode ser nulo")
+    @Email(message = "Email deve ser válido")
     private String email;
 
     @Column
+    @Size(max = 15, message = "Telefone deve ter no máximo 15 caracteres")
     private String telefone;
 
     @Column
+    @Size(max = 50, message = "Especialidade deve ter no máximo 50 caracteres")
     private String especialidade;
 
+    // Getters e Setters
     public long getId() {
         return id;
     }

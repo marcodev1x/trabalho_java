@@ -1,12 +1,10 @@
 package br.grupointegrado.trabalho_TADS.model;
 
-import br.grupointegrado.trabalho_TADS.repository.TurmaRepository;
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import jakarta.validation.constraints.NotNull;
 
-import java.security.PrivateKey;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,18 +17,21 @@ public class Turma {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column
+    @Column(nullable = false)
+    @NotNull(message = "Ano não pode ser nulo")
     private Integer ano;
 
-    @Column
+    @Column(nullable = false)
+    @NotNull(message = "Semestre não pode ser nulo")
     private Integer semestre;
 
     @ManyToOne
-    @JoinColumn(name = "curso_id")
+    @JoinColumn(name = "curso_id", nullable = false)
     private Curso curso;
 
     @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Matricula> matriculas = new ArrayList<>();
+
     @ManyToMany
     @JoinTable(
             name = "matriculas",
@@ -39,21 +40,7 @@ public class Turma {
     )
     private List<Aluno> alunos;
 
-    public List<Aluno> getAlunos() {
-        return alunos;
-    }
-
-    public void setAlunos(List<Aluno> alunos) {
-        this.alunos = alunos;
-    }
-
-    public List<Matricula> getMatriculas() {
-        return matriculas;
-    }
-
-    public void setMatriculas(List<Matricula> matriculas) {
-        this.matriculas = matriculas;
-    }
+    // Getters e Setters
 
     public long getId() {
         return id;
@@ -85,5 +72,21 @@ public class Turma {
 
     public void setCurso(Curso curso) {
         this.curso = curso;
+    }
+
+    public List<Matricula> getMatriculas() {
+        return matriculas;
+    }
+
+    public void setMatriculas(List<Matricula> matriculas) {
+        this.matriculas = matriculas;
+    }
+
+    public List<Aluno> getAlunos() {
+        return alunos;
+    }
+
+    public void setAlunos(List<Aluno> alunos) {
+        this.alunos = alunos;
     }
 }
